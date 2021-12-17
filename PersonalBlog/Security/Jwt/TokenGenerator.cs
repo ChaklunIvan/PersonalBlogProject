@@ -9,7 +9,7 @@ namespace PersonalBlog.Security.Jwt
     {
 
         public string GenerateToken(string secretKey,string issuer, string audience,double expirationMinutes, 
-            IEnumerable<Claim> claims = null)
+            IEnumerable<Claim>? claims = null)
         {
             SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -4,7 +4,7 @@
 
 namespace PersonalBlog.Data.Migrations
 {
-    public partial class test2 : Migration
+    public partial class ThreeL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

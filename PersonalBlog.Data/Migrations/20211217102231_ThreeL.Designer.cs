@@ -12,8 +12,8 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211216112817_mtest")]
-    partial class mtest
+    [Migration("20211217102231_ThreeL")]
+    partial class ThreeL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,7 +157,7 @@ namespace PersonalBlog.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PersonalBlog.Domain.Models.RefreshToken", b =>
+            modelBuilder.Entity("PersonalBlog.Data.Models.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace PersonalBlog.Data.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("PersonalBlog.Domain.Models.User", b =>
+            modelBuilder.Entity("PersonalBlog.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -253,7 +253,7 @@ namespace PersonalBlog.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PersonalBlog.Domain.Models.User", null)
+                    b.HasOne("PersonalBlog.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -262,7 +262,7 @@ namespace PersonalBlog.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PersonalBlog.Domain.Models.User", null)
+                    b.HasOne("PersonalBlog.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +277,7 @@ namespace PersonalBlog.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonalBlog.Domain.Models.User", null)
+                    b.HasOne("PersonalBlog.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -286,16 +286,16 @@ namespace PersonalBlog.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PersonalBlog.Domain.Models.User", null)
+                    b.HasOne("PersonalBlog.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PersonalBlog.Domain.Models.RefreshToken", b =>
+            modelBuilder.Entity("PersonalBlog.Data.Models.RefreshToken", b =>
                 {
-                    b.HasOne("PersonalBlog.Domain.Models.User", "User")
+                    b.HasOne("PersonalBlog.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 

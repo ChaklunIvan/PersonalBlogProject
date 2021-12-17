@@ -1,5 +1,5 @@
 ﻿using PersonalBlog.Data.Repositories.Interfaces;
-using PersonalBlog.Domain.Models;
+using PersonalBlog.Data.Models;
 using PersonalBlog.Services.Interfaces;
 using System.Linq;
 

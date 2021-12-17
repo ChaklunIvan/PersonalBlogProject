@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonalBlog.Data.Repositories.Interfaces;
-using PersonalBlog.Domain.Models.Base;
+using PersonalBlog.Data.Models.Base;
 
 namespace PersonalBlog.Data.Repositories
 {
@@ -30,7 +30,7 @@ namespace PersonalBlog.Data.Repositories
         public async Task DeleteByIdAsync(Guid modelId)
         {
             var model = await _dbSet.FirstOrDefaultAsync(m => m.Id == modelId);
-            _dbSet.Remove(model);
+             _dbSet.Remove(model);
             await _context.SaveChangesAsync();
         }
 

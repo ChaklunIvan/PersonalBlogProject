@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 
-namespace PersonalBlog.Domain.Models
+namespace PersonalBlog.Data.Models
 {
     public class UserRole : IdentityUserRole<string>
     {

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PersonalBlog.Data\PersonalBlog.Data.csproj" />
-    <ProjectReference Include="..\PersonalBlog.Domain\PersonalBlog.Domain.csproj" />
     <ProjectReference Include="..\PersonalBlog.Services\PersonalBlog.Services.csproj" />
   </ItemGroup>
 
