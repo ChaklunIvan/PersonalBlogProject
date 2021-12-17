@@ -5,8 +5,9 @@ using PersonalBlog.Data.Models;
 using PersonalBlog.Data.Requests;
 using PersonalBlog.Security.Jwt;
 using PersonalBlog.Services.Interfaces;
-using PersonalBlog.Data.Repositories.Interfaces;
 using PersonalBlog.Security;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace PersonalBlog.Controllers
 {
@@ -74,6 +75,7 @@ namespace PersonalBlog.Controllers
 
             return Ok(response);
         }
+
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh([FromBody] RefreshRequest refreshRequest)
         {
@@ -94,7 +96,7 @@ namespace PersonalBlog.Controllers
                 return NotFound(new ErrorResponse("Token not found"));
             }
 
-            var user = await _userService.GetUserByIdAsync(refreshTokenDTO.User.Id);
+            var user = await _userService.GetUserByIdAsync(refreshTokenDTO.UserId);
             if (user == null)
             {
                 return NotFound(new ErrorResponse("User not found"));
@@ -103,6 +105,21 @@ namespace PersonalBlog.Controllers
             var response = await _authenticator.Authenticate(user);
 
             return Ok(response);
+        }
+
+        [Authorize]
+        [HttpDelete("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var userId = HttpContext.User.FindFirstValue("id");
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            await _refreshTokenService.DeleteAllTokens(userId);
+
+            return NoContent();
         }
 
         private IActionResult BadRequestModelState()

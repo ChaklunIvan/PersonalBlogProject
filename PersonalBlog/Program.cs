@@ -23,25 +23,26 @@ builder.Services.AddControllers();
 
 var authenticationConfiguration = new AuthenticationConfiguration();
 builder.Configuration.Bind("Authentication", authenticationConfiguration);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
 
-o.TokenValidationParameters = new TokenValidationParameters()
-{
-    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfiguration.RefreshTokenSecret)),
-    ValidIssuer = authenticationConfiguration.Issuer,
-    ValidAudience = authenticationConfiguration.Audience,
-    ValidateIssuerSigningKey = true,
-    ValidateIssuer = true,
-    ValidateAudience = true,
-    ClockSkew = TimeSpan.Zero
-}
-);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o =>
+    {
+        o.TokenValidationParameters = new TokenValidationParameters()
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfiguration.AccessTokenSecret)),
+            ValidIssuer = authenticationConfiguration.Issuer,
+            ValidAudience = authenticationConfiguration.Audience,
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 var identity = builder.Services.AddIdentityCore<User>();
 var identityBuilder = new IdentityBuilder(identity.UserType, identity.Services);
 identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
 identityBuilder.AddUserManager<UserManager<User>>();
-builder.Services.AddAuthentication();
 
 builder.Services.AddSingleton(authenticationConfiguration);
 builder.Services.AddSingleton<AccessTokenGenerator>();

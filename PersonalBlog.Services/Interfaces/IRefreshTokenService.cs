@@ -7,5 +7,6 @@ namespace PersonalBlog.Services.Interfaces
     {
         Task CreateTokenAsync(RefreshToken token);
         Task<RefreshToken> GetByTokenAsync(string token);
+        Task DeleteAllTokens(string userId);
     }
 }

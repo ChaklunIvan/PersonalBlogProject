@@ -27,7 +27,7 @@ namespace PersonalBlog.Security
             var refreshTokenDTO = new RefreshToken()
             {
                 Token = refreshToken,
-                User = user
+                UserId = user.Id,
             };
             await _refreshTokenService.CreateTokenAsync(refreshTokenDTO);
 

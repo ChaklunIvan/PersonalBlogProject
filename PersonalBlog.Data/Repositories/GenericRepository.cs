@@ -21,6 +21,12 @@ namespace PersonalBlog.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteAllAsync(IEnumerable<TModel> modelsToDelete)
+        {
+             _dbSet.RemoveRange(modelsToDelete);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(TModel modelToDelete)
         {
             _dbSet.Remove(modelToDelete);
