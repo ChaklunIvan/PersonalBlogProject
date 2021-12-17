@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PersonalBlog.Domain.Models;
+using PersonalBlog.Data.Models;
 
 namespace PersonalBlog.Data
 {

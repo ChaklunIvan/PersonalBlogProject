@@ -1,6 +1,6 @@
-﻿using PersonalBlog.Domain.Models.Base;
+﻿using PersonalBlog.Data.Models.Base;
 
-namespace PersonalBlog.Domain.Models
+namespace PersonalBlog.Data.Models
 {
     public class RefreshToken : BaseModel
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PersonalBlog.Domain.Exceptions;
-using PersonalBlog.Domain.Models;
+using PersonalBlog.Data.Exceptions;
+using PersonalBlog.Data.Models;
 using PersonalBlog.Services.Interfaces;
 
 namespace PersonalBlog.Services
@@ -33,12 +33,12 @@ namespace PersonalBlog.Services
             var existingUserByEmail = await _userManager.FindByEmailAsync(userToRegister.Email);
             if (existingUserByEmail != null)
             {
-                throw new EmailAlreadyUsedException();
+                throw new EmailAlreadyUsedException(existingUserByEmail.Email);
             }
             var existingUserByUserName = await _userManager.FindByNameAsync(userToRegister.UserName);
             if (existingUserByUserName != null)
             {
-                throw new UserNameAlreadyUsedException();
+                throw new UserNameAlreadyUsedException(existingUserByUserName.UserName);
             }
 
             userToRegister.PasswordHash = _passwordHasher.HashPassword(null, password);
@@ -55,7 +55,7 @@ namespace PersonalBlog.Services
             var user = await _userManager.FindByIdAsync(id);
             if(user == null)
             {
-                throw new ArgumentException("User in null");
+                throw new NullableUserException();
             }
             return user;
         }

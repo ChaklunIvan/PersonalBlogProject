@@ -1,5 +1,5 @@
-﻿using PersonalBlog.Domain.Models;
-using PersonalBlog.Domain.Responses;
+﻿using PersonalBlog.Data.Models;
+using PersonalBlog.Data.Responses;
 using PersonalBlog.Security.Jwt;
 using PersonalBlog.Services.Interfaces;
 

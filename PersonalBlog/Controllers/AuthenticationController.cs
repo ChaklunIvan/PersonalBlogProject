@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PersonalBlog.Domain.Responses;
-using PersonalBlog.Domain.Models;
-using PersonalBlog.Domain.Requests;
+using PersonalBlog.Data.Responses;
+using PersonalBlog.Data.Models;
+using PersonalBlog.Data.Requests;
 using PersonalBlog.Security.Jwt;
 using PersonalBlog.Services.Interfaces;
 using PersonalBlog.Data.Repositories.Interfaces;

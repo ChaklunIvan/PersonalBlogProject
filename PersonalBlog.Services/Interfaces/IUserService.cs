@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PersonalBlog.Domain.Models;
+using PersonalBlog.Data.Models;
 
 namespace PersonalBlog.Services.Interfaces
 {
