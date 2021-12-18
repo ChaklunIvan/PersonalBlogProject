@@ -8,10 +8,9 @@ namespace PersonalBlog.Services.Interfaces
         Task<User> CreateUserAsync(User userToCreate);
         Task<User> RegisterUserAsync(User userToRegister, string password);
         Task<User> GetUserByNameAsync(string userName);
-        Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByIdAsync(Guid id);
         PasswordVerificationResult VerifyUserPassword(User userToVerify, string password);
 
-        //Task DeleteUserAsync(string userName);
-        //Task<User> UpdateUserAsync(User userToUpdate);
     }
 }

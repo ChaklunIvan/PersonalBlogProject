@@ -66,7 +66,7 @@ namespace PersonalBlog.Controllers
                 return Unauthorized(new ErrorResponse("Wrong user name"));
             }
             var result = _userService.VerifyUserPassword(user, loginRequest.Password);
-            if(result == PasswordVerificationResult.Failed)
+            if (result == PasswordVerificationResult.Failed)
             {
                 return Unauthorized(new ErrorResponse("Password verifycation failed"));
             }
@@ -112,12 +112,12 @@ namespace PersonalBlog.Controllers
         public async Task<IActionResult> Logout()
         {
             var userId = HttpContext.User.FindFirstValue("id");
-            if (userId == null)
+            if (!Guid.TryParse(userId, out Guid userGuid))
             {
                 return Unauthorized();
             }
 
-            await _refreshTokenService.DeleteAllTokens(userId);
+            await _refreshTokenService.DeleteAllTokens(userGuid);
 
             return NoContent();
         }

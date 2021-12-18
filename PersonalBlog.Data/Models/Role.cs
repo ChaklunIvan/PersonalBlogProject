@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using PersonalBlog.Data.Models.Base;
 
 namespace PersonalBlog.Data.Models
 {
-    public class Role : IdentityRole<string>
+    public class Role : BaseModel
     {
-        public ICollection<UserRole>? UserRoles { get; set; }
+        public string Name { get; set; }
+        public IEnumerable<User> Users { get; set; }
     }
 }

@@ -1,41 +1,37 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PersonalBlog.Data.Exceptions;
 using PersonalBlog.Data.Models;
+using PersonalBlog.Data.Repositories.Interfaces;
 using PersonalBlog.Services.Interfaces;
 
 namespace PersonalBlog.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
+        private readonly IGenericRepository<User> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
+        public UserService(IGenericRepository<User> userRepository, IPasswordHasher<User> passwordHasher)
+
         {
-            _userManager = userManager;
+            _userRepository = userRepository;
             _passwordHasher = passwordHasher;
         }
 
         public async Task<User> CreateUserAsync(User userToCreate)
         {
-            var user = new User()
-            {
-                UserName = userToCreate.UserName,
-                Email = userToCreate.Email,
-                PasswordHash = userToCreate.PasswordHash
-            };
-            await _userManager.CreateAsync(user);
-            return user;
+            await _userRepository.CreateAsync(userToCreate);
+            return userToCreate;
         }
 
         public async Task<User> RegisterUserAsync(User userToRegister, string password)
         {
-            var existingUserByEmail = await _userManager.FindByEmailAsync(userToRegister.Email);
+            var existingUserByEmail = await GetUserByEmailAsync(userToRegister.Email);
             if (existingUserByEmail != null)
             {
                 throw new EmailAlreadyUsedException(existingUserByEmail.Email);
             }
-            var existingUserByUserName = await _userManager.FindByNameAsync(userToRegister.UserName);
+            var existingUserByUserName = await GetUserByNameAsync(userToRegister.UserName);
             if (existingUserByUserName != null)
             {
                 throw new UserNameAlreadyUsedException(existingUserByUserName.UserName);
@@ -47,12 +43,20 @@ namespace PersonalBlog.Services
 
         public async Task<User> GetUserByNameAsync(string userName)
         {
-            return await _userManager.FindByNameAsync(userName);
+            var users = await _userRepository.GetAllAsync();
+            var user = users.FirstOrDefault(u => u.UserName == userName);
+            return user;
+        }
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var users = await _userRepository.GetAllAsync();
+            var user = users.FirstOrDefault(u => u.Email == email);
+            return user;
         }
 
-        public async Task<User> GetUserByIdAsync(string id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
             if(user == null)
             {
                 throw new NullableUserException();
@@ -66,21 +70,5 @@ namespace PersonalBlog.Services
         }
 
     }
-        //public async Task DeleteUserAsync(string userName)
-        //{
-        //    var user = await _userManager.FindByNameAsync(userName);
-        //    if (user != null)
-        //    {
-        //        await _userManager.DeleteAsync(user);
-        //    }
-        //}
-
-        //public async Task<User> UpdateUserAsync(User userToUpdate)
-        //{
-        //    var user = await _userManager.FindByIdAsync(userToUpdate.Id);
-        //    user.UserName = userToUpdate.UserName;
-        //    user.Email = userToUpdate.Email;
-        //    await _userManager.UpdateAsync(user);
-        //    return user;
-        //}
+        
 }

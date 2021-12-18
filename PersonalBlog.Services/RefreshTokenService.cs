@@ -20,7 +20,7 @@ namespace PersonalBlog.Services
             await _tokenRepository.CreateAsync(token);
         }
 
-        public async Task DeleteAllTokens(string userId)
+        public async Task DeleteAllTokens(Guid userId)
         {
             var tokens = await _tokenRepository.GetAllAsync();
             tokens = tokens.Where(t => t.UserId == userId).ToList();

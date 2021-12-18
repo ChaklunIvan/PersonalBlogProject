@@ -5,5 +5,7 @@ namespace PersonalBlog.Data.Exceptions
     {
         public UserNameAlreadyUsedException(string userName) 
             : base($"User name already in use! {userName}") { }
+
+        
     }
 }

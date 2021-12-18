@@ -39,10 +39,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var identity = builder.Services.AddIdentityCore<User>();
-var identityBuilder = new IdentityBuilder(identity.UserType, identity.Services);
-identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
-identityBuilder.AddUserManager<UserManager<User>>();
 
 builder.Services.AddSingleton(authenticationConfiguration);
 builder.Services.AddSingleton<AccessTokenGenerator>();
@@ -51,6 +47,7 @@ builder.Services.AddSingleton<TokenGenerator>();
 builder.Services.AddSingleton<RefreshTokenValidator>();
 builder.Services.AddScoped<Authenticator>();
 builder.Services.AddTransient<IGenericRepository<RefreshToken>, GenericRepository<RefreshToken>>();
+builder.Services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
 builder.Services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
