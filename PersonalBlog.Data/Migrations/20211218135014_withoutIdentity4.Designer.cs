@@ -12,8 +12,8 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211218121854_withoutIdentity3")]
-    partial class withoutIdentity3
+    [Migration("20211218135014_withoutIdentity4")]
+    partial class withoutIdentity4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,7 +71,7 @@ namespace PersonalBlog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RoleName")
@@ -90,11 +90,11 @@ namespace PersonalBlog.Data.Migrations
 
             modelBuilder.Entity("PersonalBlog.Data.Models.User", b =>
                 {
-                    b.HasOne("PersonalBlog.Data.Models.Role", "Role")
+                    b.HasOne("PersonalBlog.Data.Models.Role", null)
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("Role");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PersonalBlog.Data.Models.Role", b =>

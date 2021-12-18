@@ -48,8 +48,10 @@ builder.Services.AddSingleton<RefreshTokenValidator>();
 builder.Services.AddScoped<Authenticator>();
 builder.Services.AddTransient<IGenericRepository<RefreshToken>, GenericRepository<RefreshToken>>();
 builder.Services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
+builder.Services.AddTransient<IGenericRepository<Role>, GenericRepository<Role>>();
 builder.Services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();

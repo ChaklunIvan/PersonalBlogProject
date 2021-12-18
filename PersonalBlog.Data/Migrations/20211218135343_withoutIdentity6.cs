@@ -5,21 +5,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalBlog.Data.Migrations
 {
-    public partial class withoutIdentity2 : Migration
+    public partial class withoutIdentity6 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Users_Roles_RoleId",
                 table: "Users");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "RoleName",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "RoleId",
@@ -42,16 +34,6 @@ namespace PersonalBlog.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Users_Roles_RoleId",
                 table: "Users");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "RoleName",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "RoleId",

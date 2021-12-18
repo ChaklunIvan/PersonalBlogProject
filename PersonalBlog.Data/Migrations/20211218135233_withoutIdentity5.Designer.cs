@@ -12,8 +12,8 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211218121625_withoutIdentity2")]
-    partial class withoutIdentity2
+    [Migration("20211218135233_withoutIdentity5")]
+    partial class withoutIdentity5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,6 @@ namespace PersonalBlog.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Tokens", (string)null);
                 });
@@ -73,7 +71,7 @@ namespace PersonalBlog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RoleName")
@@ -90,22 +88,13 @@ namespace PersonalBlog.Data.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("PersonalBlog.Data.Models.RefreshToken", b =>
-                {
-                    b.HasOne("PersonalBlog.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PersonalBlog.Data.Models.User", b =>
                 {
                     b.HasOne("PersonalBlog.Data.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

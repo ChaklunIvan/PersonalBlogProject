@@ -4,7 +4,7 @@
 
 namespace PersonalBlog.Data.Migrations
 {
-    public partial class withoutIdentity1 : Migration
+    public partial class withoutIdentity5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

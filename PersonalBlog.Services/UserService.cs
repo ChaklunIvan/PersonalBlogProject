@@ -64,11 +64,19 @@ namespace PersonalBlog.Services
             return user;
         }
 
-        public PasswordVerificationResult VerifyUserPassword(User userToVerify, string password)
+        public Task<PasswordVerificationResult> VerifyUserPassword(User userToVerify, string password)
         {
-            return _passwordHasher.VerifyHashedPassword(userToVerify, userToVerify.PasswordHash, password);
+            var verifyResult = _passwordHasher.VerifyHashedPassword(userToVerify, userToVerify.PasswordHash, password);
+            return Task.FromResult(verifyResult);
         }
 
+        public Task<User> AttachRoleToUserAsync(Role roleToAttach, User userToAttach)
+        {
+            userToAttach.Role = roleToAttach;
+            userToAttach.RoleName = roleToAttach.Name;
+            _userRepository.UpdateAsync(userToAttach);
+            return Task.FromResult(userToAttach);
+        }
     }
         
 }

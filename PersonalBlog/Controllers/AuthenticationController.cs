@@ -65,7 +65,7 @@ namespace PersonalBlog.Controllers
             {
                 return Unauthorized(new ErrorResponse("Wrong user name"));
             }
-            var result = _userService.VerifyUserPassword(user, loginRequest.Password);
+            var result = await _userService.VerifyUserPassword(user, loginRequest.Password);
             if (result == PasswordVerificationResult.Failed)
             {
                 return Unauthorized(new ErrorResponse("Password verifycation failed"));
