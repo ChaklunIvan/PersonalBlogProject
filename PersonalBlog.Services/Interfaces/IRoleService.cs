@@ -7,5 +7,6 @@ namespace PersonalBlog.Services.Interfaces
     {
         Task<Role> GetRoleByNameAsync(string roleName);
         Task<Role> CreateRoleAsync(Role roleToCreate);
+        Task<IEnumerable<Role>>GetAllRolesAsync();
     }
 }

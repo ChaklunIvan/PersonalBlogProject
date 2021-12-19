@@ -20,6 +20,11 @@ namespace PersonalBlog.Services
             return roleToCreate;
         }
 
+        public async Task<IEnumerable<Role>> GetAllRolesAsync()
+        {
+            return await _roleRepository.GetAllAsync();
+        }
+
         public async Task<Role> GetRoleByNameAsync(string roleName)
         {
             var roles = await _roleRepository.GetAllAsync();

@@ -10,12 +10,16 @@ namespace PersonalBlog.Services
     {
         private readonly IGenericRepository<User> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IRoleService _roleService;
 
-        public UserService(IGenericRepository<User> userRepository, IPasswordHasher<User> passwordHasher)
+
+        public UserService(IGenericRepository<User> userRepository, IPasswordHasher<User> passwordHasher,
+            IRoleService roleService)
 
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _roleService = roleService;
         }
 
         public async Task<User> CreateUserAsync(User userToCreate)
@@ -57,7 +61,7 @@ namespace PersonalBlog.Services
         public async Task<User> GetUserByIdAsync(Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            if(user == null)
+            if (user == null)
             {
                 throw new NullableUserException();
             }
@@ -70,13 +74,25 @@ namespace PersonalBlog.Services
             return Task.FromResult(verifyResult);
         }
 
-        public Task<User> AttachRoleToUserAsync(Role roleToAttach, User userToAttach)
+        public async Task<User> AttachRoleToUserAsync(string userName)
         {
-            userToAttach.Role = roleToAttach;
-            userToAttach.RoleName = roleToAttach.Name;
-            _userRepository.UpdateAsync(userToAttach);
-            return Task.FromResult(userToAttach);
+            var user = await GetUserByNameAsync(userName);
+            var roles = await _roleService.GetAllRolesAsync();
+            var adminRole = roles.FirstOrDefault(r => r.Name == "admin");
+            var userRole = roles.FirstOrDefault(r => r.Name == "user");
+            if (user.Role == null)
+            {
+                user.Role = userRole;
+                user.RoleName = userRole.Name;
+            }
+            else
+            {
+                user.Role = adminRole;
+                user.RoleName = adminRole.Name;
+            }
+            await _userRepository.UpdateAsync(user);
+            return user;
         }
     }
-        
+
 }
