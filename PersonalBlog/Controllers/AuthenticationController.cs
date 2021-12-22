@@ -50,7 +50,6 @@ namespace PersonalBlog.Controllers
             };
 
             await _userService.RegisterUserAsync(userToRegister, registerRequest.Password);
-            await _userService.AttachRoleToUserAsync(userToRegister.UserName);
             return Ok();
         }
 

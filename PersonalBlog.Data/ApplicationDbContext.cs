@@ -20,10 +20,13 @@ namespace PersonalBlog.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            builder.Entity<User>().ToTable("Users");
-            builder.Entity<RefreshToken>().ToTable("Tokens");
-            builder.Entity<Role>().ToTable("Roles");
-
+            builder.Entity<User>().ToTable("BlogUsers");
+            builder.Entity<RefreshToken>().ToTable("BlogRefreshTokens");
+            builder.Entity<Role>().ToTable("BlogRoles");
+            builder.Entity<Blog>().ToTable("Blogs");
+            builder.Entity<Article>().ToTable("BlogArticles");
+            builder.Entity<Tag>().ToTable("BlogTags");
+            builder.Entity<Comment>().ToTable("BlogComments");
         }
     }
 }

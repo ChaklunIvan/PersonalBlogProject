@@ -41,6 +41,9 @@ namespace PersonalBlog.Services
                 throw new UserNameAlreadyUsedException(existingUserByUserName.UserName);
             }
 
+            var role = await _roleService.GetRoleByNameAsync("user");
+            userToRegister.Role = role;
+            userToRegister.RoleName = role.Name;
             userToRegister.PasswordHash = _passwordHasher.HashPassword(null, password);
             return await CreateUserAsync(userToRegister);
         }
@@ -72,26 +75,6 @@ namespace PersonalBlog.Services
         {
             var verifyResult = _passwordHasher.VerifyHashedPassword(userToVerify, userToVerify.PasswordHash, password);
             return Task.FromResult(verifyResult);
-        }
-
-        public async Task<User> AttachRoleToUserAsync(string userName)
-        {
-            var user = await GetUserByNameAsync(userName);
-            var roles = await _roleService.GetAllRolesAsync();
-            var adminRole = roles.FirstOrDefault(r => r.Name == "admin");
-            var userRole = roles.FirstOrDefault(r => r.Name == "user");
-            if (user.Role == null)
-            {
-                user.Role = userRole;
-                user.RoleName = userRole.Name;
-            }
-            else
-            {
-                user.Role = adminRole;
-                user.RoleName = adminRole.Name;
-            }
-            await _userRepository.UpdateAsync(user);
-            return user;
         }
     }
 

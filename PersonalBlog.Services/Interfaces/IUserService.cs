@@ -11,7 +11,5 @@ namespace PersonalBlog.Services.Interfaces
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(Guid id);
         Task<PasswordVerificationResult> VerifyUserPassword(User userToVerify, string password);
-        Task<User> AttachRoleToUserAsync(string userName);
-
     }
 }
