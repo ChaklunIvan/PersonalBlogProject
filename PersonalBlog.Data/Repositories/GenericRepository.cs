@@ -40,6 +40,7 @@ namespace PersonalBlog.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+
         public async Task<IEnumerable<TModel>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();

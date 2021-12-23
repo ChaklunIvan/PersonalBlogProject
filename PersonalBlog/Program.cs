@@ -39,6 +39,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        b =>
+        {
+            b.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddSingleton(authenticationConfiguration);
 builder.Services.AddSingleton<AccessTokenGenerator>();
@@ -57,8 +67,11 @@ builder.Services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
 var app = builder.Build();
 
 app.UseRouting();
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.UseEndpoints(endpoints =>
 {

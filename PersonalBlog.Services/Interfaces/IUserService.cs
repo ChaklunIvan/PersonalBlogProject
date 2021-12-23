@@ -10,6 +10,9 @@ namespace PersonalBlog.Services.Interfaces
         Task<User> GetUserByNameAsync(string userName);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(Guid id);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User> UpdateUserAsync(User userToUpdate);
+        Task DeleteUserAsync(string userName);
         Task<PasswordVerificationResult> VerifyUserPassword(User userToVerify, string password);
     }
 }

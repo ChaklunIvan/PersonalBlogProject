@@ -43,21 +43,23 @@ namespace PersonalBlog.Services
 
             var role = await _roleService.GetRoleByNameAsync("user");
             userToRegister.Role = role;
-            userToRegister.RoleName = role.Name;
+            userToRegister.Roles = role.Name;
             userToRegister.PasswordHash = _passwordHasher.HashPassword(null, password);
             return await CreateUserAsync(userToRegister);
         }
 
         public async Task<User> GetUserByNameAsync(string userName)
         {
-            var users = await _userRepository.GetAllAsync();
+            var users = await GetAllUsersAsync();
             var user = users.FirstOrDefault(u => u.UserName == userName);
+            
             return user;
         }
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            var users = await _userRepository.GetAllAsync();
+            var users = await GetAllUsersAsync();
             var user = users.FirstOrDefault(u => u.Email == email);
+            
             return user;
         }
 
@@ -70,12 +72,34 @@ namespace PersonalBlog.Services
             }
             return user;
         }
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _userRepository.GetAllAsync();
+        }
+
+
+        public async Task<User> UpdateUserAsync(User userToUpdate)
+        {
+            var user = await GetUserByIdAsync(userToUpdate.Id);
+            user.UserName = userToUpdate.UserName;
+            user.Email = userToUpdate.Email;
+            await _userRepository.UpdateAsync(user);
+
+            return user;
+        }
+
+        public async Task DeleteUserAsync(string userName)
+        {
+            var user = await GetUserByNameAsync(userName);
+            await _userRepository.DeleteAsync(user);
+        }
 
         public Task<PasswordVerificationResult> VerifyUserPassword(User userToVerify, string password)
         {
             var verifyResult = _passwordHasher.VerifyHashedPassword(userToVerify, userToVerify.PasswordHash, password);
             return Task.FromResult(verifyResult);
         }
+
     }
 
 }
