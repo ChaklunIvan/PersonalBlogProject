@@ -59,9 +59,17 @@ builder.Services.AddScoped<Authenticator>();
 builder.Services.AddTransient<IGenericRepository<RefreshToken>, GenericRepository<RefreshToken>>();
 builder.Services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
 builder.Services.AddTransient<IGenericRepository<Role>, GenericRepository<Role>>();
+builder.Services.AddTransient<IGenericRepository<Blog>, GenericRepository<Blog>>();
+builder.Services.AddTransient<IGenericRepository<Tag>, GenericRepository<Tag>>();
+builder.Services.AddTransient<IGenericRepository<Comment>, GenericRepository<Comment>>();
+builder.Services.AddTransient<IGenericRepository<Article>, GenericRepository<Article>>();
 builder.Services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<IArticleService, ArticleService>();
+builder.Services.AddTransient<ICommentService, CommentService>();
+builder.Services.AddTransient<IBlogService, BlogService>();
 builder.Services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();

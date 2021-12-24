@@ -42,7 +42,7 @@ namespace PersonalBlog.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("getusers")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
@@ -65,7 +65,7 @@ namespace PersonalBlog.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("deleteuser")]
+        [HttpDelete("deleteuser")]
         public async Task<IActionResult> DeleteUser([FromBody] User userToDelete)
         {
             await _userService.DeleteUserAsync(userToDelete.UserName);

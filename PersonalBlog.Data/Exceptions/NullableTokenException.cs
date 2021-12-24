@@ -1,5 +1,4 @@
-﻿
-namespace PersonalBlog.Data.Exceptions
+﻿namespace PersonalBlog.Data.Exceptions
 {
     public class NullableTokenException : Exception
     {

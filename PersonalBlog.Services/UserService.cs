@@ -81,6 +81,10 @@ namespace PersonalBlog.Services
         public async Task<User> UpdateUserAsync(User userToUpdate)
         {
             var user = await GetUserByIdAsync(userToUpdate.Id);
+            if (user == null)
+            {
+                throw new NullableUserException();
+            }
             user.UserName = userToUpdate.UserName;
             user.Email = userToUpdate.Email;
             await _userRepository.UpdateAsync(user);
@@ -91,6 +95,10 @@ namespace PersonalBlog.Services
         public async Task DeleteUserAsync(string userName)
         {
             var user = await GetUserByNameAsync(userName);
+            if (user == null)
+            {
+                throw new NullableUserException();
+            }
             await _userRepository.DeleteAsync(user);
         }
 
