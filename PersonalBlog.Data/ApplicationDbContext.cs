@@ -7,9 +7,13 @@ namespace PersonalBlog.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
@@ -21,8 +25,8 @@ namespace PersonalBlog.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("BlogUsers");
-            builder.Entity<RefreshToken>().ToTable("BlogRefreshTokens");
             builder.Entity<Role>().ToTable("BlogRoles");
+            builder.Entity<RefreshToken>().ToTable("BlogRefreshTokens");
             builder.Entity<Blog>().ToTable("Blogs");
             builder.Entity<Article>().ToTable("BlogArticles");
             builder.Entity<Tag>().ToTable("BlogTags");

@@ -30,8 +30,8 @@ namespace PersonalBlog.Controllers
         [HttpPost("attachrole")]
         public async Task<IActionResult> AttachRole([FromBody] AttachRoleRequest roleRequest)
         {
-            var user = await _userService.GetUserByNameAsync(roleRequest.userName);
-            var role = await _roleService.GetRoleByNameAsync(roleRequest.roleName);
+            var user = await _userService.GetUserByNameAsync(roleRequest.UserName);
+            var role = await _roleService.GetRoleByNameAsync(roleRequest.RoleName);
 
             user.Role = role;
             user.Roles = role.Name;

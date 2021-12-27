@@ -16,8 +16,14 @@ namespace PersonalBlog.Services
 
         public async Task<Blog> CreateBlogAsync(Blog blogToCreate)
         {
-            await _blogRepository.CreateAsync(blogToCreate);
-            return blogToCreate;
+            var blog = new Blog()
+            {
+                Title = blogToCreate.Title,
+                Articles = blogToCreate.Articles,
+                User = blogToCreate.User
+            };
+            await _blogRepository.CreateAsync(blog);
+            return blog;
         }
 
         public async Task DeleteBlogAsync(Guid blogId)
@@ -39,11 +45,14 @@ namespace PersonalBlog.Services
         {
             var blogs = await _blogRepository.GetAllAsync();
             var blog = blogs.FirstOrDefault(b => b.Title == blogTitle);
-            if(blog == null)
-            {
-                throw new NullableBlogException();
-            }
             return blog;
+        }
+
+        public async Task<IEnumerable<Blog>> GetBlogsByUser(User user)
+        {
+            var blogs = await _blogRepository.GetAllAsync();
+            var blog = blogs.Where(b => b.User == user);
+            return blog.ToList();
         }
 
         public async Task<Blog> UpdateBlogAsync(Blog blogToUpdate)

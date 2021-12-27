@@ -8,6 +8,7 @@ namespace PersonalBlog.Services.Interfaces
         Task<Blog> UpdateBlogAsync(Blog blogToUpdate);
         Task DeleteBlogAsync(Guid blogId);
         Task<Blog> GetBlogByNameAsync(string blogTitle);
+        Task<IEnumerable<Blog>> GetBlogsByUser(User user);
         Task<IEnumerable<Blog>> GetAllBlogAsync();
     }
 }

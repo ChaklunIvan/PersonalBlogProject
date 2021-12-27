@@ -15,8 +15,13 @@ namespace PersonalBlog.Services
 
         public async Task<Tag> CreateTagAsync(Tag tagToCreate)
         {
-            await _tagRepository.CreateAsync(tagToCreate);
-            return tagToCreate;
+            var tag = new Tag() 
+            { 
+                Value = tagToCreate.Value,
+                Articles = tagToCreate.Articles
+            };
+            await _tagRepository.CreateAsync(tag);
+            return tag;
         }
 
         public async Task DeleteTagAsync(Guid tagId)

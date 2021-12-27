@@ -21,7 +21,7 @@ namespace PersonalBlog.Security.Jwt
         {
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Sub,user.Id.ToString()),
+                new Claim("id",user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email,user.Email),
                 new Claim(JwtRegisteredClaimNames.Name,user.UserName),
                 new Claim("role", user.Roles)

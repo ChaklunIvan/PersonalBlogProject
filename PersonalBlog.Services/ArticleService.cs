@@ -16,13 +16,21 @@ namespace PersonalBlog.Services
 
         public async Task<Article> CreateArticleAsync(Article articleToCreate)
         {
-            await _articleRepository.CreateAsync(articleToCreate);
-            return articleToCreate;
+            var article = new Article()
+            {
+                Title = articleToCreate.Title,
+                Text = articleToCreate.Text,
+                BlogTitle = articleToCreate.BlogTitle,
+                Blog = articleToCreate.Blog,
+                Comments = articleToCreate.Comments,
+            };
+            await _articleRepository.CreateAsync(article);
+            return article;
         }
 
         public async Task DeleteArticleAsync(Guid articleId)
         {
-            var article =  await _articleRepository.GetByIdAsync(articleId);
+            var article = await _articleRepository.GetByIdAsync(articleId);
             if (article == null)
             {
                 throw new NullableArticleException();
@@ -45,14 +53,25 @@ namespace PersonalBlog.Services
             return article;
         }
 
-        public Task<Article> GetArticleByTag(Tag tag)
+        public async Task<IEnumerable<Article>> GetArticlesByBlogNameAsync(string blogName)
         {
-            throw new NotImplementedException();
+            var articles = await _articleRepository.GetAllAsync();
+            articles = articles.Where(a => a.BlogTitle == blogName);
+            return articles;
         }
 
-        public Task<Article> GetArticleByTextAsync(string text)
+        public async Task<Article> GetArticleByTagAsync(Tag tag)
         {
-            throw new NotImplementedException();
+            var articles = await _articleRepository.GetAllAsync();
+            var article = articles.FirstOrDefault(a => a.Tags == tag);
+            return article;
+        }
+
+        public async Task<Article> GetArticleByNameAsync(string articleName)
+        {
+            var articles = await _articleRepository.GetAllAsync();
+            var article = articles.FirstOrDefault(a => a.Title == articleName);
+            return article;
         }
 
         public async Task<Article> UpdateArticleAsync(Article articleToUpdate)
@@ -67,5 +86,6 @@ namespace PersonalBlog.Services
             await _articleRepository.UpdateAsync(article);
             return article;
         }
+
     }
 }

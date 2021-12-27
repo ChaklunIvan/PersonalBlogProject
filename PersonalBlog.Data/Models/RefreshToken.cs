@@ -6,6 +6,5 @@ namespace PersonalBlog.Data.Models
     {
         public string Token { get; set; }
         public Guid UserId { get; set; }
-        
     }
 }

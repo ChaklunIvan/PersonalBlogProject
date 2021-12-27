@@ -6,10 +6,11 @@ namespace PersonalBlog.Services.Interfaces
     {
         Task<Article> CreateArticleAsync(Article articleToCreate);
         Task<Article> UpdateArticleAsync(Article articleToUpdate);
-        Task DeleteArticleAsync(Guid idarticleId);
+        Task DeleteArticleAsync(Guid articleId);
         Task<IEnumerable<Article>> GetAllArticlesAsync();
         Task<Article> GetArticleByIdAsync(Guid articleId);
-        Task<Article> GetArticleByTag(Tag tag);
-        Task<Article> GetArticleByTextAsync(string text);
+        Task<Article> GetArticleByTagAsync(Tag tag);
+        Task<IEnumerable<Article>> GetArticlesByBlogNameAsync(string blogName);
+        Task<Article> GetArticleByNameAsync(string articleName);
     }
 }
