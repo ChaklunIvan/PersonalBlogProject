@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalBlog.Data.Migrations
 {
-    public partial class controllerscomplete : Migration
+    public partial class ControllersComplete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Data.Models;
-using PersonalBlog.Data.Models.Requests;
 using PersonalBlog.Data.Responses;
 using PersonalBlog.Services.Interfaces;
 using System.Security.Claims;
