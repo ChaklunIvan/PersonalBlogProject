@@ -16,8 +16,14 @@ namespace PersonalBlog.Services
 
         public async Task<Comment> CreateCommentAsync(Comment commentToCreate)
         {
-            await _commentRepository.CreateAsync(commentToCreate);
-            return commentToCreate;
+            var comment = new Comment() 
+            { 
+                Value = commentToCreate.Value,
+                Article = commentToCreate.Article,
+                User = commentToCreate.User
+            };
+            await _commentRepository.CreateAsync(comment);
+            return comment;
         }
 
         public async Task DeleteCommentAsync(Guid commentId)
@@ -30,19 +36,26 @@ namespace PersonalBlog.Services
             await _commentRepository.DeleteAsync(comment);
         }
 
-        public async Task<IEnumerable<Comment>> GetAllCommentsAsync()
+        public async Task<IEnumerable<Comment>> GetCommentsByArticleAsync(Guid articleId)
         {
             var comments = await _commentRepository.GetAllAsync();
-            return comments;
+            return comments.Where(c => c.Article.Id == articleId);
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsByUserAsync(Guid userId)
+        {
+            var comments = await _commentRepository.GetAllAsync();
+            return comments.Where(c => c.User.Id == userId);
         }
 
         public async Task<Comment> UpdateCommentAsync(Comment commentToUpdate)
         {
             var comment = await _commentRepository.GetByIdAsync(commentToUpdate.Id);
-            if(comment == null)
+            if (comment == null)
             {
                 throw new NullableCommentException();
-            }
+            };
+            comment.Value = commentToUpdate.Value;
             await _commentRepository.UpdateAsync(comment);
             return comment;
         }

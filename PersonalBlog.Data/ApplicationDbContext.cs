@@ -11,9 +11,8 @@ namespace PersonalBlog.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Article> Articles { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
@@ -28,9 +27,8 @@ namespace PersonalBlog.Data
             builder.Entity<Role>().ToTable("BlogRoles");
             builder.Entity<RefreshToken>().ToTable("BlogRefreshTokens");
             builder.Entity<Blog>().ToTable("Blogs");
-            builder.Entity<Article>().ToTable("BlogArticles");
-            builder.Entity<Tag>().ToTable("BlogTags");
             builder.Entity<Comment>().ToTable("BlogComments");
+            builder.Entity<Article>().ToTable("BlogArticles");
         }
     }
 }

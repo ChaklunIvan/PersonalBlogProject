@@ -9,7 +9,7 @@ namespace PersonalBlog.Services.Interfaces
         Task DeleteArticleAsync(Guid articleId);
         Task<IEnumerable<Article>> GetAllArticlesAsync();
         Task<Article> GetArticleByIdAsync(Guid articleId);
-        Task<Article> GetArticleByTagAsync(Tag tag);
+        Task<Article> GetArticleByTagAsync(string tag);
         Task<IEnumerable<Article>> GetArticlesByBlogNameAsync(string blogName);
         Task<Article> GetArticleByNameAsync(string articleName);
     }

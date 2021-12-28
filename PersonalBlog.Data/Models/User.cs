@@ -10,6 +10,5 @@ namespace PersonalBlog.Data.Models
         public string? Roles{ get; set; }
         public virtual Role? Role { get; set; }
         public virtual ICollection<Blog>? Blogs {get; set; }
-        public virtual ICollection<Comment>? Comments {get; set; }
     }
 }

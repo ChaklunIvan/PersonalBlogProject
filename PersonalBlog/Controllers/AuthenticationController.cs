@@ -107,8 +107,8 @@ namespace PersonalBlog.Controllers
             return Ok(response);
         }
 
-        [Authorize]
         [HttpDelete("logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             var userId = HttpContext.User.FindFirstValue("id");

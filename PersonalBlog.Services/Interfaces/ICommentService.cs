@@ -7,6 +7,7 @@ namespace PersonalBlog.Services.Interfaces
         Task<Comment> CreateCommentAsync(Comment commentToCreate);
         Task<Comment> UpdateCommentAsync(Comment commentToUpdate);
         Task DeleteCommentAsync(Guid commentId);
-        Task<IEnumerable<Comment>> GetAllCommentsAsync();
+        Task<IEnumerable<Comment>> GetCommentsByArticleAsync(Guid articleId);
+        Task<IEnumerable<Comment>> GetCommentsByUserAsync(Guid userId);
     }
 }

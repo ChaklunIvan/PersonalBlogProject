@@ -22,7 +22,7 @@ namespace PersonalBlog.Services
                 Text = articleToCreate.Text,
                 BlogTitle = articleToCreate.BlogTitle,
                 Blog = articleToCreate.Blog,
-                Comments = articleToCreate.Comments,
+                Tags = articleToCreate.Tags,
             };
             await _articleRepository.CreateAsync(article);
             return article;
@@ -60,10 +60,10 @@ namespace PersonalBlog.Services
             return articles;
         }
 
-        public async Task<Article> GetArticleByTagAsync(Tag tag)
+        public async Task<Article> GetArticleByTagAsync(string tag)
         {
             var articles = await _articleRepository.GetAllAsync();
-            var article = articles.FirstOrDefault(a => a.Tags == tag);
+            var article = articles.FirstOrDefault(a => a.Tags.Contains(tag));
             return article;
         }
 
@@ -83,6 +83,7 @@ namespace PersonalBlog.Services
             }
             article.Text = articleToUpdate.Text;
             article.Title = articleToUpdate.Title;
+            article.Tags = articleToUpdate.Tags;
             await _articleRepository.UpdateAsync(article);
             return article;
         }

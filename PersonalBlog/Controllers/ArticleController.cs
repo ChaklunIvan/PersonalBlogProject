@@ -81,6 +81,16 @@ namespace PersonalBlog.Controllers
             var articles = await _articleService.GetAllArticlesAsync();
             return Ok(articles);
         }
+
+        [HttpGet("getalltags")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<IEnumerable<Article>>> GetAllTags()
+        {
+            var articles = await _articleService.GetAllArticlesAsync();
+            var tags = articles.SelectMany(x => x.Tags);
+            return Ok(tags);
+        }
+
         [HttpGet("getarticlesbyblog")]
         public async Task<ActionResult<IEnumerable<Article>>> GetAllArticlesByBlog(string blogName)
         {
@@ -96,9 +106,13 @@ namespace PersonalBlog.Controllers
         }
 
         [HttpGet("getarticlebytag")]
-        public async Task<IActionResult> GetArticleByTag([FromBody] Tag tag)
+        public async Task<IActionResult> GetArticleByTag([FromBody] string tag)
         {
             var article = await _articleService.GetArticleByTagAsync(tag);
+            if(article == null)
+            {
+                return BadRequest(new ErrorResponse("There is no article for this tag"));
+            }
             return Ok(article);
         }
 

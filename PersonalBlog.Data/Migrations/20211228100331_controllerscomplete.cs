@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalBlog.Data.Migrations
 {
-    public partial class migration1 : Migration
+    public partial class controllerscomplete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,18 +32,6 @@ namespace PersonalBlog.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BlogRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BlogTags",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BlogTags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +80,7 @@ namespace PersonalBlog.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BlogTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlogTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -106,37 +94,13 @@ namespace PersonalBlog.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleTag",
-                columns: table => new
-                {
-                    ArticlesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TagsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticleTag", x => new { x.ArticlesId, x.TagsId });
-                    table.ForeignKey(
-                        name: "FK_ArticleTag_BlogArticles_ArticlesId",
-                        column: x => x.ArticlesId,
-                        principalTable: "BlogArticles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArticleTag_BlogTags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "BlogTags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BlogComments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,18 +109,14 @@ namespace PersonalBlog.Data.Migrations
                         name: "FK_BlogComments_BlogArticles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "BlogArticles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BlogComments_BlogUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "BlogUsers",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticleTag_TagsId",
-                table: "ArticleTag",
-                column: "TagsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlogArticles_BlogId",
@@ -187,16 +147,10 @@ namespace PersonalBlog.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticleTag");
-
-            migrationBuilder.DropTable(
                 name: "BlogComments");
 
             migrationBuilder.DropTable(
                 name: "BlogRefreshTokens");
-
-            migrationBuilder.DropTable(
-                name: "BlogTags");
 
             migrationBuilder.DropTable(
                 name: "BlogArticles");

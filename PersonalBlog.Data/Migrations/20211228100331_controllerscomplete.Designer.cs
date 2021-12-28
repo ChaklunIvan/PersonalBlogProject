@@ -12,8 +12,8 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211226113448_migration1")]
-    partial class migration1
+    [Migration("20211228100331_controllerscomplete")]
+    partial class controllerscomplete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace PersonalBlog.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ArticleTag", b =>
-                {
-                    b.Property<Guid>("ArticlesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TagsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ArticlesId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("ArticleTag");
-                });
 
             modelBuilder.Entity("PersonalBlog.Data.Models.Article", b =>
                 {
@@ -49,7 +34,6 @@ namespace PersonalBlog.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BlogTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
@@ -93,15 +77,15 @@ namespace PersonalBlog.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArticleId")
+                    b.Property<Guid>("ArticleId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -145,21 +129,6 @@ namespace PersonalBlog.Data.Migrations
                     b.ToTable("BlogRoles", (string)null);
                 });
 
-            modelBuilder.Entity("PersonalBlog.Data.Models.Tag", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlogTags", (string)null);
-                });
-
             modelBuilder.Entity("PersonalBlog.Data.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -190,21 +159,6 @@ namespace PersonalBlog.Data.Migrations
                     b.ToTable("BlogUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ArticleTag", b =>
-                {
-                    b.HasOne("PersonalBlog.Data.Models.Article", null)
-                        .WithMany()
-                        .HasForeignKey("ArticlesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PersonalBlog.Data.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PersonalBlog.Data.Models.Article", b =>
                 {
                     b.HasOne("PersonalBlog.Data.Models.Blog", "Blog")
@@ -227,10 +181,12 @@ namespace PersonalBlog.Data.Migrations
                 {
                     b.HasOne("PersonalBlog.Data.Models.Article", "Article")
                         .WithMany("Comments")
-                        .HasForeignKey("ArticleId");
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PersonalBlog.Data.Models.User", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Article");
@@ -265,8 +221,6 @@ namespace PersonalBlog.Data.Migrations
             modelBuilder.Entity("PersonalBlog.Data.Models.User", b =>
                 {
                     b.Navigation("Blogs");
-
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }
