@@ -15,9 +15,10 @@ namespace PersonalBlog.Services
             _tokenRepository = tokenRepository;
         }
 
-        public async Task CreateTokenAsync(RefreshToken token)
+        public async Task<RefreshToken> CreateTokenAsync(RefreshToken token)
         {
             await _tokenRepository.CreateAsync(token);
+            return token;
         }
 
         public async Task DeleteAllTokens(Guid userId)

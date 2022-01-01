@@ -93,7 +93,7 @@ namespace PersonalBlog.Test
             Assert.Equal(user.Roles, actual.Roles);
         }
         [Fact]
-        public async Task RegisterUser_ShouldReturnEmailExistException()
+        public void RegisterUser_ShouldReturnEmailExistException()
         {
             // Arrange
             string password = "1q2w3e";
@@ -108,7 +108,7 @@ namespace PersonalBlog.Test
             Assert.Equal(ex.Result.Message, $"Email is already in use! {user.Email}");
         }
         [Fact]
-        public async Task RegisterUser_ShouldReturnUserNameAllreadyExist()
+        public void RegisterUser_ShouldReturnUserNameAllreadyExist()
         {
             // Arrange
             string password = "1q2w3e";
@@ -139,7 +139,7 @@ namespace PersonalBlog.Test
             Assert.True(Users.Exists(u => u == userByEmail));
         }
         [Fact]
-        public async Task GetUserById_ReturnException()
+        public void GetUserById_ReturnException()
         {
             // Arrange
             var userId = new Guid();
@@ -163,5 +163,34 @@ namespace PersonalBlog.Test
             Assert.Equal(Users, users);
         }
         
+        [Fact]
+        public async Task UpdateUser_ShouldReturnUser()
+        {
+            // Arrange
+            var user = Users[0];
+            user.UserName = "test";
+            user.Email = "test";
+            _userRepoMock.Setup(option => option.GetByIdAsync(user.Id)).ReturnsAsync(user);
+            _userRepoMock.Setup(option => option.UpdateAsync(user)).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _serviceUnderTest.UpdateUserAsync(user);
+
+            // Assert
+            Assert.Equal(Users[0],result);
+        }
+        [Fact]
+        public void UpdateUser_ShouldReturnNull_NullableException()
+        {
+            // Arrange
+            var userId = new Guid();
+            var user = Users[0];
+            _userRepoMock.Setup(option => option.GetByIdAsync(userId)).ReturnsAsync(() => null);
+
+            // Assert
+            var ex = Assert.ThrowsAsync<NullableUserException>(async () => await _serviceUnderTest.UpdateUserAsync(user));
+            Assert.Equal("User is null!", ex.Result.Message);
+
+        }
     }
 }
